@@ -88,16 +88,8 @@ class State{
         return boatsize;
     }
 
-    public void setBoatsize(int boatsize) {
-        this.boatsize = boatsize;
-    }
-
     public int getMaxtravels() {
         return maxtravels;
-    }
-
-    public void setMaxtravels(int maxtravels) {
-        this.maxtravels = maxtravels;
     }
 
     public double getCost_of_travel() {
@@ -138,12 +130,7 @@ class State{
     }
 
     public boolean isFinal() {
-        if (leftapostles == 0 && leftcannibals == 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return leftapostles == 0 && leftcannibals == 0;
     }
 
     public boolean isValid(State parent) { // this method will check if the state will be valid
@@ -151,9 +138,7 @@ class State{
             if((leftapostles == 0 || leftapostles >= leftcannibals) && parent.pos == Position.left ){
                 return true;
             }
-            else if((rightapostles == 0 || rightapostles >= rightcannibals) && parent.pos == Position.right){
-                return true;
-            }
+            else return (rightapostles == 0 || rightapostles >= rightcannibals) && parent.pos == Position.right;
         }
         return false;
     }
@@ -175,6 +160,7 @@ class State{
                 for (int i = 0; i <= j; i++) {// boat size > = 2 else the problem won't work
                     int mis = j - i;
                     int can = i;
+                    // we allow states like 1 missionary and 2 cannibals with boat size three cause we can say leave 1 missionary and 1 cannibal to the right and return with 1 cannibal  to the left
                     AddIfValid(children, new State(leftapostles - mis, leftcannibals - can, rightapostles + mis, rightcannibals + can, Position.right));
                 }
             }
@@ -184,6 +170,7 @@ class State{
                 for (int i = 0; i <= j; i++) {// boat size > = 2 else the problem won't work
                     int mis = j - i;
                     int can = i;
+                    // we allow states like 1 missionary and 2 cannibals with boat size three cause we can say leave 1 missionary and 1 cannibal to the right and return with 1 cannibal  to the left
                     AddIfValid(children, new State(leftapostles + mis, leftcannibals + can, rightapostles - mis, rightcannibals - can, Position.left));
                 }
             }
