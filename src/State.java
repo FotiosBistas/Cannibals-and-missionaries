@@ -6,7 +6,7 @@ import java.lang.Math;
 // M will be assigned to the boatsize when the program is called
 // K will be assigned to the maxtravles when the program is called
 enum Position {left,right};
-class State{
+class State implements Comparable<State>{
     // a variable to define how many apostles are in left side
     private int leftapostles;
     // a variable to define how many cannibals are in left side
@@ -18,7 +18,7 @@ class State{
     // a variable to define the max travels
     private static int maxtravels;
     //a variable to evaluate the cost of the travels
-    private int cost_of_travel = 0;
+    private double cost_of_travel = 0;
     // a variable to determine which side are we on
     private Position pos = Position.left;
     // a variable to maintain the parent of the child
@@ -47,6 +47,7 @@ class State{
         this.rightcannibals = copystate.rightcannibals;
         this.rightapostles = copystate.rightapostles;
         this.pos = copystate.pos;
+        this.parent = copystate.parent;
     }
 
     public int getLeftapostles() {
@@ -109,7 +110,7 @@ class State{
 
     public State getParent(){return parent;}
 
-    public int CostOfTravel() { // see if we can find anything better
+    public double CostOfTravel() { // this is the heuristic function
         double leftap = leftapostles;
         double leftcan = leftcannibals;
         double bsize = boatsize;
@@ -117,11 +118,11 @@ class State{
             cost_of_travel= 1;
         }
         else if(pos == Position.left){
-            cost_of_travel = (int) (2*(Math.ceil((leftap + leftcan)/bsize) - 1)) + 1;
+            cost_of_travel = (2*(Math.ceil((leftap + leftcan)/bsize) - 1)) + 1;
 
         }
         else if (pos == Position.right) {
-            cost_of_travel =  (int) (2*(Math.ceil((leftap + leftcan)/bsize) -1)) + 2;
+            cost_of_travel = (2*(Math.ceil((leftap + leftcan)/bsize) - 1)) + 2;
         }
         return cost_of_travel;
     }
@@ -131,21 +132,21 @@ class State{
     }
 
     public boolean isValid(State parent) { // this method will check if the state will be valid
-        if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0){
-            if((leftapostles == 0 || leftapostles >= leftcannibals) && parent.pos == Position.left ){
+        if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0){//this check is ensuring that the numbers will not be negative
+            if((leftapostles == 0 || leftapostles >= leftcannibals) && parent.pos == Position.left ){//this ensures that leftapostles will be greater than the number of leftcannibals,leftapostles == 0 allows them to be equal to zero
                 return true;
             }
-            else return (rightapostles == 0 || rightapostles >= rightcannibals) && parent.pos == Position.right;
+            else return (rightapostles == 0 || rightapostles >= rightcannibals) && parent.pos == Position.right; // this ensures that rightapostles will be greater than the number of rightcannibals,rightapostles == 0 allows them to be equal to zero
         }
         return false;
     }
 
 
-    public State AddIfValid(ArrayList<State> children, State newstate){
+    public State AddIfValid(ArrayList<State> children, State newstate){//checks if the newstate if valid
         if(newstate.isValid(this)){
             newstate.setParent(this);
-            newstate.CostOfTravel();
-            children.add(newstate);
+            newstate.CostOfTravel();//calculates the value of the heuristic function
+            children.add(newstate);//adds to the front
         }
         return newstate;
     }
@@ -176,36 +177,33 @@ class State{
         return children;
     }
 
-    @Override
+
     public int identifier() {
+        double bsize = boatsize;
         if (Position.left == this.pos){
-            return Math.floor(Math.pow(this.leftapostles + this.leftcannibals)/boatsize);
+            return (int) Math.floor(Math.pow(((this.leftapostles + this.leftcannibals)/bsize),2));
         }else{
-            return Math.floor(Math.pow(this.rightapostles + this.rightcannibals)/boatsize);
+            return (int) Math.floor(Math.pow(((this.rightapostles + this.rightcannibals)/bsize),2));
         }
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (((State)o).getPos().compareTo("left") == 0 && (((State)o).getPos().compareTo(this.getPos()) == 0)) {
-            if (((State) o).getLeftapostles() = this.getLeftapostles() &&
-                    ((State) o).getLeftcannibals() == this.getLeftcannibals() &&
-                     && this.getPos() == ((State) o).getPos()) {
-                return true;
-            }
-        }else if(((State)o).getPos().compareTo("right") && (((State)o).getPos().compareTo(this.getPos()) == 0)){
-            if ((State)o).getRightapostles() == this.getRightapostles() && ((State)o).getRightcannibals() == this.getRightcannibals()){
+    public boolean equals(State o) {
+        if(o == this){
+            return true;
+        }
+        else{
+            if(o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
                 return true;
             }
         }
+
         return false;
 
     }
-    //firfe
+
     @Override
-    //we need this for the closed set of A*
-    public int hashCode()
+    public int hashCode()//we need this for the closed set of A*
     {
         if (Position.left == this.pos){
             return this.leftapostles + this.leftcannibals + this.identifier();
@@ -216,5 +214,11 @@ class State{
         }
     }
 
-
+    @Override
+    public int compareTo(State o) { // we need only the case for the equality
+        if(o.cost_of_travel == this.cost_of_travel){
+            return 0;
+        }
+        return 1;
+    }
 }
