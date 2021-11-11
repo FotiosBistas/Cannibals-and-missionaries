@@ -176,23 +176,45 @@ class State{
         return children;
     }
 
-    /*@Override
+    @Override
     public int identifier() {
-        return 0;
+        if (Position.left == this.pos){
+            return Math.floor(Math.pow(this.leftapostles + this.leftcannibals)/boatsize);
+        }else{
+            return Math.floor(Math.pow(this.rightapostles + this.rightcannibals)/boatsize);
+        }
+
     }
 
     @Override
     public boolean equals(Object o) {
+        if (((State)o).getPos().compareTo("left") == 0 && (((State)o).getPos().compareTo(this.getPos()) == 0)) {
+            if (((State) o).getLeftapostles() = this.getLeftapostles() &&
+                    ((State) o).getLeftcannibals() == this.getLeftcannibals() &&
+                     && this.getPos() == ((State) o).getPos()) {
+                return true;
+            }
+        }else if(((State)o).getPos().compareTo("right") && (((State)o).getPos().compareTo(this.getPos()) == 0)){
+            if ((State)o).getRightapostles() == this.getRightapostles() && ((State)o).getRightcannibals() == this.getRightcannibals()){
+                return true;
+            }
+        }
+        return false;
 
     }
 
     @Override
-    public int hashCode() {
-        return ;
+    //we need this for the closed set of A*
+    public int hashCode()
+    {
+        if (Position.left == this.pos){
+            return this.leftapostles + this.leftcannibals + this.identifier();
+        }
+        else{
+            return this.rightapostles + this.rightcannibals + this.identifier();
+
+        }
     }
 
-    @Override
-    public int compareTo(State o) {
-        return 0;
-    }*/
+
 }
