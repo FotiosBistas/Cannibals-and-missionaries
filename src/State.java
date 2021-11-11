@@ -202,7 +202,7 @@ class State{
         return false;
 
     }
-
+    //firfe
     @Override
     //we need this for the closed set of A*
     public int hashCode()
