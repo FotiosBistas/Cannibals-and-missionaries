@@ -24,14 +24,11 @@ class State{
     // a variable to maintain the parent of the child
     private State parent;
     // cannibals and apostles on the boat
-    private int cannibalsonboat;
-    private int apostlesonboat;
 
     State(int N,int M,int K){
         // we have the same number of cannibals and missionaries at the start they all are in the left side
         leftapostles = N;
         leftcannibals = N;
-
         boatsize = M;
         maxtravels = K;
     }
@@ -44,7 +41,7 @@ class State{
         this.pos = pos;
     }
 
-    State(State copystate){
+    State(State copystate){ // copy constructor
         this.leftapostles = copystate.leftapostles;
         this.leftcannibals = copystate.leftcannibals;
         this.rightcannibals = copystate.rightcannibals;
