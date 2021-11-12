@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        State initialstate = new State(2,2,100);
+        State initialstate = new State(25,2,50);
         Search search = new Search(100);
         long start = System.currentTimeMillis();
         State terminal = search.Astarsearch(initialstate);
