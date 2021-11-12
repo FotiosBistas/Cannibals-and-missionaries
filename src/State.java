@@ -188,11 +188,15 @@ class State implements Comparable<State>{
 
     }
 
-    public boolean equals(State o) {
-        if(o == this){
+    public boolean equals(Object obj) {
+        if(!(obj instanceof State)){
+            return false;
+        }
+        else if(obj == this){
             return true;
         }
         else{
+            State o = (State)obj;
             if(o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
                 return true;
             }
