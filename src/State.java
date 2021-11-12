@@ -60,6 +60,7 @@ class State implements Comparable<State>{
     public void setMaxtravels(int maxtravels) {
         this.maxtravels = maxtravels;
         this.currenttravels++;
+        this.currenttravels = this.currenttravels + this.parent.currenttravels;
     }
 
     public int getLeftapostles() {
@@ -123,7 +124,7 @@ class State implements Comparable<State>{
         double leftcan = leftcannibals;
         double bsize = boatsize;
         if(leftcannibals + leftapostles <= boatsize){
-            cost_of_travel= 1;
+            cost_of_travel= 1 + this.currenttravels;
         }
         else if(pos == Position.left){
             cost_of_travel = this.currenttravels + (2*((leftap + leftcan)/bsize - 1) + 1);
@@ -172,6 +173,7 @@ class State implements Comparable<State>{
                 ", rightapostles=" + rightapostles +
                 ", rightcannibals=" + rightcannibals +
                 ", maxtravels=" + maxtravels +
+                ", currenttravels=" + currenttravels +
                 ", cost_of_travel=" + cost_of_travel +
                 ", pos=" + pos +
                 ", parent=" + parent +
