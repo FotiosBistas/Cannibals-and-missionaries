@@ -112,11 +112,11 @@ class State implements Comparable<State>{
             cost_of_travel= 1;
         }
         else if(pos == Position.left){
-            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize) - 1 + 1;
+            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize - 1) + 1;
 
         }
         else if (pos == Position.right) {
-            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize) - 1 + 2;
+            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize - 1) + 2;
         }
         return cost_of_travel;
     }
