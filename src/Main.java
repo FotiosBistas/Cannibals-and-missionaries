@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        State initialstate = new State(10,3);
+        State initialstate = new State(2,2,100);
         Search search = new Search(100);
         long start = System.currentTimeMillis();
         State terminal = search.Astarsearch(initialstate);
@@ -28,7 +28,7 @@ public class Main {
 
             System.out.println();
             System.out.println("Search time:" + (double) (end-start)/1000 + "sec");//total time in seconds
-            System.out.println(search.getMaxtravels() + " travels happened");
+            System.out.println(path.size() - 1 + " travels happened");
         }
 
     }

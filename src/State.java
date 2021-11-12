@@ -15,7 +15,8 @@ class State implements Comparable<State>{
     private int rightapostles,rightcannibals = 0;
     // a variable to define the space inside the boat
     private static int boatsize;
-
+    //a variable to represent the max travels
+    private int maxtravels;
     //a variable to evaluate the cost of the travels
     private double cost_of_travel = 0;
     // a variable to determine which side are we on
@@ -24,11 +25,12 @@ class State implements Comparable<State>{
     private State parent;
     // cannibals and apostles on the boat
 
-    State(int N,int M){
+    State(int N,int M,int K){
         // we have the same number of cannibals and missionaries at the start they all are in the left side
         leftapostles = N;
         leftcannibals = N;
         boatsize = M;
+        maxtravels = K;
     }
 
     State(int leftapostles,int leftcannibals,int rightapostles,int rightcannibals, Position pos){
@@ -46,6 +48,14 @@ class State implements Comparable<State>{
         this.rightapostles = copystate.rightapostles;
         this.pos = copystate.pos;
         this.parent = copystate.parent;
+    }
+
+    public int getMaxtravels() {
+        return maxtravels;
+    }
+
+    public void setMaxtravels(int maxtravels) {
+        this.maxtravels = maxtravels;
     }
 
     public int getLeftapostles() {
@@ -139,6 +149,7 @@ class State implements Comparable<State>{
     public State AddIfValid(ArrayList<State> children, State newstate){//checks if the newstate if valid
         if(newstate.isValid(this)){
             newstate.setParent(this);
+            newstate.setMaxtravels(this.getMaxtravels()-1);
             newstate.CostOfTravel();//calculates the value of the heuristic function
             children.add(newstate);//adds to the front
         }
@@ -152,6 +163,7 @@ class State implements Comparable<State>{
                 ", leftcannibals=" + leftcannibals +
                 ", rightapostles=" + rightapostles +
                 ", rightcannibals=" + rightcannibals +
+                ", maxtravels=" + maxtravels +
                 ", cost_of_travel=" + cost_of_travel +
                 ", pos=" + pos +
                 ", parent=" + parent +
