@@ -14,6 +14,7 @@ class Search {
         frontier.add(initialstate);
         while(!frontier.isEmpty()){
             State bestchild = this.frontier.remove(0);
+            //TODO if costs are equal then randomize which one you choose
             if(bestchild.getMaxtravels() == 0){
                 return null;
             }
