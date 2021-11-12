@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Objects;
 import java.lang.Math;
 
 // N will be assigned to the apostles and cannibals variables when the program is called
@@ -26,9 +25,9 @@ class State implements Comparable<State>{
     private Position pos = Position.left;
     // a variable to maintain the parent of the child
     private State parent;
-    // cannibals and apostles on the boat
 
-    State(int N,int M,int K){
+
+    State(int N, int M, int K){
         // we have the same number of cannibals and missionaries at the start they all are in the left side
         leftapostles = N;
         leftcannibals = N;
@@ -57,10 +56,25 @@ class State implements Comparable<State>{
         return maxtravels;
     }
 
+    @Override
+    public String toString() {
+        return "State{" +
+                "leftapostles=" + leftapostles +
+                ", leftcannibals=" + leftcannibals +
+                ", rightapostles=" + rightapostles +
+                ", rightcannibals=" + rightcannibals +
+                ", maxtravels=" + maxtravels +
+                ", currenttravels=" + currenttravels +
+                ", cost_of_travel=" + cost_of_travel +
+                ", pos=" + pos +
+                ", parent=" + parent +
+                '}';
+    }
+
     public void setMaxtravels(int maxtravels) {
         this.maxtravels = maxtravels;
-        this.currenttravels++;
-        this.currenttravels = this.currenttravels + this.parent.currenttravels;
+        currenttravels++;
+        currenttravels = currenttravels + parent.currenttravels;
     }
 
     public int getLeftapostles() {
@@ -115,7 +129,9 @@ class State implements Comparable<State>{
         this.pos = pos;
     }
 
-    public void setParent(State parent){this.parent = parent;}
+    public void setParent(State parent){
+        this.parent = parent;
+    }
 
     public State getParent(){return parent;}
 
@@ -123,15 +139,16 @@ class State implements Comparable<State>{
         double leftap = leftapostles;
         double leftcan = leftcannibals;
         double bsize = boatsize;
+        double curr = currenttravels;
         if(leftcannibals + leftapostles <= boatsize){
-            cost_of_travel= 1 + this.currenttravels;
+            cost_of_travel = 1 + curr;
         }
         else if(pos == Position.left){
-            cost_of_travel = this.currenttravels + (2*((leftap + leftcan)/bsize - 1) + 1);
+            cost_of_travel = (2*((leftap + leftcan)/bsize - 1) + 1) + curr;
 
         }
         else if (pos == Position.right) {
-            cost_of_travel = this.currenttravels + (2*((leftap + leftcan)/bsize - 1) + 2);
+            cost_of_travel = (2*((leftap + leftcan)/bsize - 1) + 2) + curr;
         }
         return cost_of_travel;
     }
@@ -158,26 +175,11 @@ class State implements Comparable<State>{
     public State AddIfValid(ArrayList<State> children, State newstate){//checks if the newstate if valid
         if(newstate.isValid(this)){
             newstate.setParent(this);
-            newstate.setMaxtravels(this.getMaxtravels()-1);
+            newstate.setMaxtravels(maxtravels-1);
             newstate.CostOfTravel();//calculates the value of the heuristic function
             children.add(newstate);//adds to the front
         }
         return newstate;
-    }
-
-    @Override
-    public String toString() {
-        return "State{" +
-                "leftapostles=" + leftapostles +
-                ", leftcannibals=" + leftcannibals +
-                ", rightapostles=" + rightapostles +
-                ", rightcannibals=" + rightcannibals +
-                ", maxtravels=" + maxtravels +
-                ", currenttravels=" + currenttravels +
-                ", cost_of_travel=" + cost_of_travel +
-                ", pos=" + pos +
-                ", parent=" + parent +
-                '}';
     }
 
     public ArrayList<State> getChildren() {
