@@ -21,15 +21,14 @@ public class Main {
             }
             //reverse the path
             Collections.reverse(path);
-            double sum = 0;
+
             for(State item: path){
-                sum = item.getCost_of_travel() + sum;
                 System.out.println(item);
             }
 
             System.out.println();
             System.out.println("Search time:" + (double) (end-start)/1000 + "sec");//total time in seconds
-            System.out.println("Total cost:" + sum);
+            System.out.println(search.getMaxtravels() + " travels happened");
         }
 
     }

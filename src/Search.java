@@ -12,6 +12,9 @@ class Search {
         closedSet = new HashSet<>();
         this.maxtravels = maxtravels;
     }
+    public int getMaxtravels(){
+        return maxtravels;
+    }
     public State Astarsearch(State initialstate){
         State currentstate = initialstate;
         frontier.add(initialstate);
