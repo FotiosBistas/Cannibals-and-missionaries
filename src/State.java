@@ -15,8 +15,7 @@ class State implements Comparable<State>{
     private int rightapostles,rightcannibals = 0;
     // a variable to define the space inside the boat
     private static int boatsize;
-    // a variable to define the max travels
-    private static int maxtravels;
+
     //a variable to evaluate the cost of the travels
     private double cost_of_travel = 0;
     // a variable to determine which side are we on
@@ -25,12 +24,11 @@ class State implements Comparable<State>{
     private State parent;
     // cannibals and apostles on the boat
 
-    State(int N,int M,int K){
+    State(int N,int M){
         // we have the same number of cannibals and missionaries at the start they all are in the left side
         leftapostles = N;
         leftcannibals = N;
         boatsize = M;
-        maxtravels = K;
     }
 
     State(int leftapostles,int leftcannibals,int rightapostles,int rightcannibals, Position pos){
@@ -86,10 +84,6 @@ class State implements Comparable<State>{
         return boatsize;
     }
 
-    public int getMaxtravels() {
-        return maxtravels;
-    }
-
     public double getCost_of_travel() {
         return cost_of_travel;
     }
@@ -118,11 +112,11 @@ class State implements Comparable<State>{
             cost_of_travel= 1;
         }
         else if(pos == Position.left){
-            cost_of_travel = 2*((leftap + leftcan)/bsize) - 1 + 1;
+            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize) - 1 + 1;
 
         }
         else if (pos == Position.right) {
-            cost_of_travel = 2*((leftap + leftcan)/bsize) - 1 + 2;
+            cost_of_travel = this.parent.cost_of_travel + 2*((leftap + leftcan)/bsize) - 1 + 2;
         }
         return cost_of_travel;
     }
@@ -149,6 +143,19 @@ class State implements Comparable<State>{
             children.add(newstate);//adds to the front
         }
         return newstate;
+    }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "leftapostles=" + leftapostles +
+                ", leftcannibals=" + leftcannibals +
+                ", rightapostles=" + rightapostles +
+                ", rightcannibals=" + rightcannibals +
+                ", cost_of_travel=" + cost_of_travel +
+                ", pos=" + pos +
+                ", parent=" + parent +
+                '}';
     }
 
     public ArrayList<State> getChildren() {
@@ -178,7 +185,7 @@ class State implements Comparable<State>{
     }
 
 
-    public int identifier() {
+    public int identifier() { //TODO find a unique
         double bsize = boatsize;
         if (Position.left == this.pos){
             return (int) Math.floor(Math.pow(((this.leftapostles + this.leftcannibals)/bsize),2));
@@ -187,7 +194,7 @@ class State implements Comparable<State>{
         }
 
     }
-
+    @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof State)){
             return false;
@@ -219,10 +226,15 @@ class State implements Comparable<State>{
     }
 
     @Override
-    public int compareTo(State o) { // we need only the case for the equality
+    public int compareTo(State o) { // we take -1 for the normal return 1 case and we take 1 for the normal return -1 in order Collections.sort(this.frontier); to sort them in increasing order
         if(o.cost_of_travel == this.cost_of_travel){
             return 0;
         }
-        return 1;
+        else if(o.cost_of_travel > this.cost_of_travel){
+            return -1;
+        }
+        else{
+            return 1;
+        }
     }
 }
