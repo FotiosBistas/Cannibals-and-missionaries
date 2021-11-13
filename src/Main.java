@@ -3,13 +3,14 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        State initialstate = new State(200,7,10000);
+        State initialstate = new State(100,3,10000);
         Search search = new Search();
         long start = System.currentTimeMillis();
         State terminal = search.Astarsearch(initialstate);
         long end = System.currentTimeMillis();
         if(terminal == null){
             System.out.println("No solution found");
+            System.out.println(start - end + " secs");
         }
         else{
             State temp = terminal;
