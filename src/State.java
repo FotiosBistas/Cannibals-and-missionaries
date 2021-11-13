@@ -19,8 +19,8 @@ class State implements Comparable<State>{
     //a variable to represent how many travels have happened
     private int currenttravels;
     //a variable to evaluate the cost of the travels
-
-    private double cost_of_travel = 0;
+    private double total_cost;
+    private double cost_of_travel;
     // a variable to determine which side are we on
     private Position pos = Position.left;
     // a variable to maintain the parent of the child
@@ -65,6 +65,7 @@ class State implements Comparable<State>{
                 ", rightcannibals=" + rightcannibals +
                 ", maxtravels=" + maxtravels +
                 ", currenttravels=" + currenttravels +
+                ", total_cost=" + total_cost +
                 ", cost_of_travel=" + cost_of_travel +
                 ", pos=" + pos +
                 ", parent=" + parent +
@@ -139,18 +140,21 @@ class State implements Comparable<State>{
         double leftap = leftapostles;
         double leftcan = leftcannibals;
         double bsize = boatsize;
-        double curr = currenttravels;
         if(leftcannibals + leftapostles <= boatsize){
-            cost_of_travel = 1 + curr;
+            cost_of_travel = 1.0;
         }
         else if(pos == Position.left){
-            cost_of_travel = (2*((leftap + leftcan)/bsize - 1) + 1) + curr;
+            cost_of_travel = 2*(((leftap + leftcan)/bsize) - 1) + 1;
 
         }
         else if (pos == Position.right) {
-            cost_of_travel = (2*((leftap + leftcan)/bsize - 1) + 2) + curr;
+            cost_of_travel = 2*(((leftap + leftcan)/bsize) - 1) + 2 ;
         }
         return cost_of_travel;
+    }
+
+    public void TotalCostF(){
+        total_cost = cost_of_travel + currenttravels;
     }
 
     public boolean isFinal() {
@@ -177,6 +181,7 @@ class State implements Comparable<State>{
             newstate.setParent(this);
             newstate.setMaxtravels(maxtravels-1);
             newstate.CostOfTravel();//calculates the value of the heuristic function
+            newstate.TotalCostF(); // f(n) = g(n) + h(n)
             children.add(newstate);//adds to the front
         }
         return newstate;
@@ -227,7 +232,7 @@ class State implements Comparable<State>{
         }
         else{
             State o = (State)obj;
-            if(this.parent == o.parent && this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
+            if(this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
                 return true;
             }
         }
@@ -239,21 +244,15 @@ class State implements Comparable<State>{
     @Override
     public int hashCode()//we need this for the closed set of A*
     {
-        if (Position.left == this.pos){
-            return this.leftapostles + this.leftcannibals + this.identifier();
-        }
-        else{
-            return this.rightapostles + this.rightcannibals + this.identifier();
-
-        }
+        return this.leftapostles + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
     }
 
     @Override
     public int compareTo(State o) { // we take -1 for the normal return 1 case and we take 1 for the normal return -1 in order Collections.sort(this.frontier); to sort them in increasing order
-        if(o.cost_of_travel == this.cost_of_travel){
+        if(o.total_cost == this.total_cost){
             return 0;
         }
-        else if(o.cost_of_travel > this.cost_of_travel){
+        else if(o.total_cost > this.total_cost){
             return -1;
         }
         else{

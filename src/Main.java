@@ -3,8 +3,8 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-        State initialstate = new State(100,3,1000);
-        Search search = new Search(100);
+        State initialstate = new State(1,3,10);
+        Search search = new Search();
         long start = System.currentTimeMillis();
         State terminal = search.Astarsearch(initialstate);
         long end = System.currentTimeMillis();

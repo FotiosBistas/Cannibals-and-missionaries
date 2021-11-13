@@ -5,7 +5,7 @@ import java.util.HashSet;
 class Search {
     private ArrayList<State> frontier;
     private HashSet<State> closedSet;
-    Search(int maxtravels){
+    Search(){
         frontier = new ArrayList<>();
         closedSet = new HashSet<>();
     }
@@ -13,7 +13,8 @@ class Search {
         State currentstate = initialstate;
         frontier.add(initialstate);
         while(!frontier.isEmpty()){
-            State bestchild = this.frontier.remove(0);
+            State bestchild = Collections.min(this.frontier);
+             this.frontier.remove(bestchild);
             //TODO if costs are equal then randomize which one you choose
             if(bestchild.getMaxtravels() == 0){
                 return null;
@@ -24,7 +25,6 @@ class Search {
             if (!this.closedSet.contains(bestchild)) {
                 this.closedSet.add(bestchild);
                 this.frontier.addAll(bestchild.getChildren());
-                Collections.sort(this.frontier);
             }
 
             currentstate = bestchild;
