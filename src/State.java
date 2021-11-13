@@ -248,7 +248,7 @@ class State implements Comparable<State>{
         if(pos == Position.right){
             temp = 1;
         }
-        return temp + this.leftapostles + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
+        return temp + this.leftapostles +(int)this.total_cost + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
     }
 
     @Override
