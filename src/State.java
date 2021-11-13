@@ -244,7 +244,11 @@ class State implements Comparable<State>{
     @Override
     public int hashCode()//we need this for the closed set of A*
     {
-        return this.leftapostles + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
+        int temp = 0;
+        if(pos == Position.right){
+            temp = 1;
+        }
+        return temp + this.leftapostles + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
     }
 
     @Override
