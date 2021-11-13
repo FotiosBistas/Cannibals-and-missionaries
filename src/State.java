@@ -232,7 +232,7 @@ class State implements Comparable<State>{
         }
         else{
             State o = (State)obj;
-            if(this.total_cost == o.total_cost && this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
+            if(this.currenttravels == o.currenttravels && this.total_cost == o.total_cost && this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
                 return true;
             }
         }
@@ -248,7 +248,7 @@ class State implements Comparable<State>{
         if(pos == Position.right){
             temp = 1;
         }
-        return temp + this.leftapostles +(int)this.total_cost + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
+        return temp + this.currenttravels + this.leftapostles +(int)this.total_cost + this.leftcannibals + this.identifier() + this.rightcannibals + this.rightapostles + (int)this.cost_of_travel;
     }
 
     @Override
