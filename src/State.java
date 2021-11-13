@@ -162,15 +162,15 @@ class State implements Comparable<State>{
     }
 
     public boolean isValid(State parent) { // this method will check if the state will be valid
-        /*if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0 && (leftapostles == 0 || leftapostles >= leftcannibals) && (rightapostles == 0 || rightapostles >= rightcannibals)){
+        if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0 && (leftapostles == 0 || leftapostles >= leftcannibals) && (rightapostles == 0 || rightapostles >= rightcannibals)){
             return true;
-        }*/ // this check is for when the number of cannibals cannot exceed the number of missionaries on the boat
-        if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0){//this check is ensuring that the numbers will not be negative
+        } // this check is for when the number of cannibals cannot exceed the number of missionaries on the boat
+        /*if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0){//this check is ensuring that the numbers will not be negative
             if((leftapostles == 0 || leftapostles >= leftcannibals) && parent.pos == Position.left ){//this ensures that leftapostles will be greater than the number of leftcannibals,leftapostles == 0 allows them to be equal to zero
                 return true;
             }
             else return (rightapostles == 0 || rightapostles >= rightcannibals) && parent.pos == Position.right; // this ensures that rightapostles will be greater than the number of rightcannibals,rightapostles == 0 allows them to be equal to zero
-        } //this check is for when the number of cannibals can exceed the number of missionaries on the boat
+        }*/ //this check is for when the number of cannibals can exceed the number of missionaries on the boat
         return false;
     }
 
