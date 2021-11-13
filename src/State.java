@@ -232,7 +232,7 @@ class State implements Comparable<State>{
         }
         else{
             State o = (State)obj;
-            if(this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
+            if(this.total_cost == o.total_cost && this.cost_of_travel == o.cost_of_travel && o.pos == this.pos && o.leftapostles == this.leftapostles && o.leftcannibals == this.leftcannibals && o.rightapostles == this.rightapostles && o.rightcannibals == this.rightcannibals){
                 return true;
             }
         }
