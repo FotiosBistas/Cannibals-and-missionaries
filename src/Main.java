@@ -10,7 +10,7 @@ public class Main {
         long end = System.currentTimeMillis();
         if(terminal == null){
             System.out.println("No solution found");
-            System.out.println(start - end + " secs");
+            System.out.println((double)(end - start)/1000 + " secs");
         }
         else{
             State temp = terminal;
