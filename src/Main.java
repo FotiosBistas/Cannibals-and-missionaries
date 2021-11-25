@@ -47,9 +47,11 @@ public class Main {
                     State terminal = search.Astarsearch(initialstate);
                     long end = System.currentTimeMillis();
                     if (terminal == null) {
-                        System.out.println("For " + i + " missionaries and" + i + " apostles" + ", " + j + " boat size" + " and " + K + " max repetitions");
+                        System.out.println("----------------------------------------------------------");
                         System.out.println("No solution found");
+                        System.out.println("For " + i + " missionaries and" + i + " apostles" + ", " + j + " boat size" + " and " + K + " max repetitions");
                         System.out.println((double) (end - start) / 1000 + " secs");
+                        System.out.println("----------------------------------------------------------");
                     } else {
                         State temp = terminal;
                         ArrayList<State> path = new ArrayList<>();
