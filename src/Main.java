@@ -15,8 +15,8 @@ public class Main {
             long end = System.currentTimeMillis();
             if (terminal == null) {
                 System.out.println("----------------------------------------------------------");
-                System.out.println("For " + N + " missionaries and " + N + " apostles" + ", " + M + " boat size" + " and " + K + " max repetitions");
                 System.out.println("No solution found");
+                System.out.println("For " + N + " missionaries and " + N + " apostles" + ", " + M + " boat size" + " and " + K + " max repetitions");
                 System.out.println((double) (end - start) / 1000 + " secs");
                 System.out.println("----------------------------------------------------------");
             } else {
