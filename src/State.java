@@ -165,6 +165,7 @@ class State implements Comparable<State>{
         if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0 && (leftapostles == 0 || leftapostles >= leftcannibals) && (rightapostles == 0 || rightapostles >= rightcannibals)){
             return true;
         } // this check is for when the number of cannibals cannot exceed the number of missionaries on the boat
+
         /*if(leftapostles >= 0 && leftcannibals >= 0 && rightapostles >= 0 && rightcannibals >= 0){//this check is ensuring that the numbers will not be negative
             if((leftapostles == 0 || leftapostles >= leftcannibals) && parent.pos == Position.left ){//this ensures that leftapostles will be greater than the number of leftcannibals,leftapostles == 0 allows them to be equal to zero
                 return true;
@@ -194,7 +195,6 @@ class State implements Comparable<State>{
                 for (int i = 0; i <= j; i++) {// boat size > = 2 else the problem won't work
                     int mis = j - i;
                     int can = i;
-                    // we allow states like 1 missionary and 2 cannibals with boat size three cause we can say leave 1 missionary and 1 cannibal to the right and return with 1 cannibal  to the left
                     AddIfValid(children, new State(leftapostles - mis, leftcannibals - can, rightapostles + mis, rightcannibals + can, Position.right));
                 }
             }
@@ -204,7 +204,6 @@ class State implements Comparable<State>{
                 for (int i = 0; i <= j; i++) {// boat size > = 2 else the problem won't work
                     int mis = j - i;
                     int can = i;
-                    // we allow states like 1 missionary and 2 cannibals with boat size three cause we can say leave 1 missionary and 1 cannibal to the right and return with 1 cannibal  to the left
                     AddIfValid(children, new State(leftapostles + mis, leftcannibals + can, rightapostles - mis, rightcannibals - can, Position.left));
                 }
             }
@@ -213,7 +212,7 @@ class State implements Comparable<State>{
     }
 
 
-    public int identifier() { //TODO find a unique
+    public int identifier() {
         double bsize = boatsize;
         if (Position.left == this.pos){
             return (int) Math.floor(Math.pow(((this.leftapostles + this.leftcannibals)/bsize),2));
